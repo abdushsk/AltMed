@@ -98,7 +98,20 @@ class HomeScreen extends StatelessWidget {
                                 : DailyItemView();
                       }),
                       // AD CARD
-
+                      Container(
+                        child: Row(
+                          children: [
+                            Text(
+                              "Order Medicine",
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            Text(
+                              "Upload Prescription and tell us what you need. We do the rest!",
+                              style: TextStyle(),
+                            ),
+                          ],
+                        ),
+                      ),
                       // Popular Item
                       Padding(
                         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
