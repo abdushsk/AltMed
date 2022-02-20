@@ -8,6 +8,7 @@ import 'package:flutter_grocery/provider/banner_provider.dart';
 import 'package:flutter_grocery/provider/category_provider.dart';
 import 'package:flutter_grocery/provider/localization_provider.dart';
 import 'package:flutter_grocery/provider/product_provider.dart';
+import 'package:flutter_grocery/utill/color_resources.dart';
 import 'package:flutter_grocery/utill/dimensions.dart';
 import 'package:flutter_grocery/view/base/main_app_bar.dart';
 import 'package:flutter_grocery/view/base/title_widget.dart';
@@ -88,6 +89,74 @@ class HomeScreen extends StatelessWidget {
                                 : CategoryView();
                       }),
 
+                      // CARD START
+
+                      Container(
+                        width: MediaQuery.of(context).size.width - 20,
+                        // height: MediaQuery.of(context).size.height * 18 / 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          color: ColorResources.getCardBgColor(context),
+                        ),
+                        padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 7,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Order Medicine",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  Text(
+                                    "Upload Prescription and tell us what you need. We do the rest!",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        wordSpacing: 1,
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w400),
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(
+                                    height: 7,
+                                  ),
+                                  Text(
+                                    "Save Upto 60% Off",
+                                    style: TextStyle(
+                                        color: Colors.green.shade400,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 7,
+                                  ),
+                                  ElevatedButton(
+                                    child: Text("Order Now"),
+                                    onPressed: () {},
+                                  )
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Image.asset(
+                                "assets/image/medic.png",
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+
+                      // CARD END
+
                       // Category
                       Consumer<ProductProvider>(
                           builder: (context, product, child) {
@@ -97,21 +166,6 @@ class HomeScreen extends StatelessWidget {
                                 ? SizedBox()
                                 : DailyItemView();
                       }),
-                      // AD CARD
-                      Container(
-                        child: Row(
-                          children: [
-                            Text(
-                              "Order Medicine",
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                            Text(
-                              "Upload Prescription and tell us what you need. We do the rest!",
-                              style: TextStyle(),
-                            ),
-                          ],
-                        ),
-                      ),
                       // Popular Item
                       Padding(
                         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
