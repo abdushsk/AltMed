@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "154337326684",
+    "project_id": "altimed-2022",
+    "storage_bucket": "altimed-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154337326684:android:c634ea7d171de6bea49899",
+        "android_client_info": {
+          "package_name": "com.altimed.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154337326684-n85pq092ftjmupjtiudrnjc1gv6a868r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3dcymVX4Vk2_8hYXw8XOwhY5bE_APSMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154337326684-n85pq092ftjmupjtiudrnjc1gv6a868r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
