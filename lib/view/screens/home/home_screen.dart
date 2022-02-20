@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_grocery/helper/product_type.dart';
 import 'package:flutter_grocery/helper/responsive_helper.dart';
+import 'package:flutter_grocery/helper/route_helper.dart';
 import 'package:flutter_grocery/localization/language_constrants.dart';
 import 'package:flutter_grocery/provider/banner_provider.dart';
 import 'package:flutter_grocery/provider/category_provider.dart';
@@ -140,7 +141,10 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   ElevatedButton(
                                     child: Text("Order Now"),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).pushNamed(
+                                          RouteHelper.getPrescriptionRoute());
+                                    },
                                   )
                                 ],
                               ),
