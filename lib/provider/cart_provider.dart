@@ -6,11 +6,14 @@ import 'package:flutter_grocery/view/base/custom_snackbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+
 class CartProvider extends ChangeNotifier {
   final CartRepo cartRepo;
   CartProvider({@required this.cartRepo});
 
   List<CartModel> _cartList = [];
+  List<File> pickedImages = [];
+  File pickedPDF;
   double _amount = 0.0;
 
   List<CartModel> get cartList => _cartList;
@@ -18,11 +21,10 @@ class CartProvider extends ChangeNotifier {
 
   bool temp = false;
 
-  void setTemp(bool x){
+  void setTemp(bool x) {
     temp = x;
     notifyListeners();
   }
-
 
   void getCartData() {
     _cartList = [];
@@ -44,7 +46,6 @@ class CartProvider extends ChangeNotifier {
   }
 
   void setQuantity(bool isIncrement, int index) {
-
     if (isIncrement) {
       _cartList[index].quantity = _cartList[index].quantity + 1;
       _amount = _amount + _cartList[index].discountedPrice;
@@ -58,7 +59,8 @@ class CartProvider extends ChangeNotifier {
   }
 
   void removeFromCart(int index, BuildContext context) {
-    _amount = _amount - (cartList[index].discountedPrice * cartList[index].quantity);
+    _amount =
+        _amount - (cartList[index].discountedPrice * cartList[index].quantity);
     showCustomSnackBar(getTranslated('remove_from_cart', context), context);
     _cartList.removeAt(index);
     cartRepo.addToCartList(_cartList);
@@ -73,14 +75,14 @@ class CartProvider extends ChangeNotifier {
   }
 
   int isExistInCart(CartModel cartModel) {
-    for(int index= 0; index<_cartList.length; index++) {
-      if(_cartList[index].id == cartModel.id && (_cartList[index].variation != null ? _cartList[index].variation.type
-          == cartModel.variation.type : true)) {
+    for (int index = 0; index < _cartList.length; index++) {
+      if (_cartList[index].id == cartModel.id &&
+          (_cartList[index].variation != null
+              ? _cartList[index].variation.type == cartModel.variation.type
+              : true)) {
         return index;
       }
     }
     return -1;
   }
-
-
 }
