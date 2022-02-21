@@ -230,9 +230,30 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                   ],
                 ),
               ),
-              Center(
-                child: Container(
-                  child: Image.asset("assets/image/valid.png"),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("VALID PRISCRIPTION GUIDE",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w500)),
+                      Text(
+                        "Image should be sharp and contain below mentioned 4 points",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Image.asset("assets/image/valid.png"),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Container(
