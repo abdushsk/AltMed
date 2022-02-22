@@ -18,6 +18,7 @@ import 'package:flutter_grocery/utill/dimensions.dart';
 import 'package:flutter_grocery/utill/images.dart';
 import 'package:flutter_grocery/utill/styles.dart';
 import 'package:flutter_grocery/view/base/app_bar_base.dart';
+import 'package:flutter_grocery/view/base/custom_app_bar.dart';
 import 'package:flutter_grocery/view/base/custom_button.dart';
 import 'package:flutter_grocery/view/base/custom_divider.dart';
 import 'package:flutter_grocery/view/base/custom_snackbar.dart';
@@ -31,6 +32,9 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 
 class CartScreen extends StatefulWidget {
+  final bool activated;
+
+  const CartScreen({Key key, this.activated}) : super(key: key);
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
@@ -42,7 +46,6 @@ class _CartScreenState extends State<CartScreen> {
   final TextEditingController _couponController = TextEditingController();
   bool temp = false;
   bool reloaded = false;
-
 
   void skip() {
     if (!reloaded) {
@@ -82,7 +85,13 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: ResponsiveHelper.isMobilePhone()
-          ? null
+          ? (widget.activated
+              ? CustomAppBar(
+                  title: "Cart",
+                  isCenter: false,
+                  isElevation: true,
+                )
+              : null)
           : ResponsiveHelper.isDesktop(context)
               ? MainAppBar()
               : AppBarBase(),
@@ -129,52 +138,80 @@ class _CartScreenState extends State<CartScreen> {
                                     children: [
                                       // Product
                                       ListView.builder(
-
                                         physics: NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         itemCount: cart.cartList.length,
                                         itemBuilder: (context, index) {
-
                                           if (cart.cartList[index]
                                                   .prescriptionRequired ==
                                               'yes') {
-
                                             temp = true;
                                             skip();
-
                                           }
                                           return Column(
                                             children: [
                                               Container(
-                                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            topLeft: Radius
+                                                                .circular(10),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10))),
                                                 child: Stack(children: [
                                                   Positioned(
-                                                    top: 0, bottom: 0, right: 0, left: 0,
-                                                    child: Icon(Icons.delete, color: Colors.white, size: 50),
+                                                    top: 0,
+                                                    bottom: 0,
+                                                    right: 0,
+                                                    left: 0,
+                                                    child: Icon(Icons.delete,
+                                                        color: Colors.white,
+                                                        size: 50),
                                                   ),
                                                   Dismissible(
                                                     key: UniqueKey(),
-                                                    onDismissed: (DismissDirection direction) {
-                                                      if(cart.cartList[index].prescriptionRequired == 'yes'){
+                                                    onDismissed:
+                                                        (DismissDirection
+                                                            direction) {
+                                                      if (cart.cartList[index]
+                                                              .prescriptionRequired ==
+                                                          'yes') {
                                                         temp = false;
                                                         reloaded = false;
                                                         skip();
                                                       }
-                                                      Provider.of<CouponProvider>(context, listen: false).removeCouponData(false);
-                                                      Provider.of<CartProvider>(context, listen: false).removeFromCart(index, context);
-
-
-
-
+                                                      Provider.of<CouponProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .removeCouponData(
+                                                              false);
+                                                      Provider.of<CartProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .removeFromCart(
+                                                              index, context);
                                                     },
                                                     child: Container(
                                                       height: 95,
-                                                      padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL, horizontal: Dimensions.PADDING_SIZE_SMALL),
+                                                      padding: EdgeInsets.symmetric(
+                                                          vertical: Dimensions
+                                                              .PADDING_SIZE_EXTRA_SMALL,
+                                                          horizontal: Dimensions
+                                                              .PADDING_SIZE_SMALL),
                                                       decoration: BoxDecoration(
-                                                        color: Theme.of(context).cardColor,
+                                                        color: Theme.of(context)
+                                                            .cardColor,
                                                         boxShadow: [
                                                           BoxShadow(
-                                                            color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 300],
+                                                            color: Colors
+                                                                .grey[Provider.of<
+                                                                            ThemeProvider>(
+                                                                        context)
+                                                                    .darkTheme
+                                                                ? 700
+                                                                : 300],
                                                             blurRadius: 5,
                                                             spreadRadius: 1,
                                                           )
@@ -182,86 +219,233 @@ class _CartScreenState extends State<CartScreen> {
                                                       ),
                                                       child: Row(children: [
                                                         ClipRRect(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          child: FadeInImage.assetNetwork(
-                                                            placeholder: Images.placeholder,
-                                                            image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${cart.cartList[index].image}',
-                                                            height: 70, width: 85,
-                                                            imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder, height: 70, width: 85),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          child: FadeInImage
+                                                              .assetNetwork(
+                                                            placeholder: Images
+                                                                .placeholder,
+                                                            image:
+                                                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${cart.cartList[index].image}',
+                                                            height: 70,
+                                                            width: 85,
+                                                            imageErrorBuilder: (c,
+                                                                    o, s) =>
+                                                                Image.asset(
+                                                                    Images
+                                                                        .placeholder,
+                                                                    height: 70,
+                                                                    width: 85),
                                                           ),
                                                         ),
-                                                        SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+                                                        SizedBox(
+                                                            width: Dimensions
+                                                                .PADDING_SIZE_SMALL),
                                                         Expanded(
                                                             child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                                height: 10),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
-                                                                SizedBox(height: 10),
-                                                                Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    Expanded(
-                                                                        flex: 2,
-                                                                        child: Text(cart.cartList[index].name,
-                                                                            style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL), maxLines: 2, overflow: TextOverflow.ellipsis)),
-                                                                    Text(
-                                                                      PriceConverter.convertPrice(context, cart.cartList[index].price),
-                                                                      style: poppinsSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
-                                                                    ),
-                                                                    SizedBox(width: 10),
-                                                                  ],
+                                                                Expanded(
+                                                                    flex: 2,
+                                                                    child: Text(
+                                                                        cart
+                                                                            .cartList[
+                                                                                index]
+                                                                            .name,
+                                                                        style: poppinsRegular.copyWith(
+                                                                            fontSize: Dimensions
+                                                                                .FONT_SIZE_SMALL),
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis)),
+                                                                Text(
+                                                                  PriceConverter.convertPrice(
+                                                                      context,
+                                                                      cart
+                                                                          .cartList[
+                                                                              index]
+                                                                          .price),
+                                                                  style: poppinsSemiBold
+                                                                      .copyWith(
+                                                                          fontSize:
+                                                                              Dimensions.FONT_SIZE_SMALL),
                                                                 ),
-                                                                SizedBox(height: 5),
-                                                                Row(children: [
-                                                                  Expanded(child: Text('${cart.cartList[index].capacity} ${cart.cartList[index].unit}', style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL))),
-                                                                  InkWell(
-                                                                    onTap: () {
-                                                                      if(cart.cartList[index].prescriptionRequired == 'yes'){
-                                                                        temp = false;
-                                                                        reloaded = false;
-                                                                        skip();
-                                                                      }
-                                                                      Provider.of<CouponProvider>(context, listen: false).removeCouponData(false);
-                                                                      if (cart.cartList[index].quantity > 1) {
-                                                                        Provider.of<CartProvider>(context, listen: false).setQuantity(false, index);
-                                                                      }else if(cart.cartList[index].quantity == 1){
-                                                                        Provider.of<CartProvider>(context, listen: false).removeFromCart(index, context);
-                                                                      }
-                                                                    },
-                                                                    child: Padding(
-                                                                      padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL, vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                                                      child: Icon(Icons.remove, size: 20,color: Theme.of(context).primaryColor),
-                                                                    ),
-                                                                  ),
-                                                                  Text(cart.cartList[index].quantity.toString(), style: poppinsSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,color: Theme.of(context).primaryColor)),
-                                                                  InkWell(
-                                                                    onTap: () {
-                                                                      if(cart.cartList[index].quantity < cart.cartList[index].stock) {
-                                                                        Provider.of<CouponProvider>(context, listen: false).removeCouponData(false);
-                                                                        Provider.of<CartProvider>(context, listen: false).setQuantity(true, index);
-                                                                      }else {
-                                                                        showCustomSnackBar(getTranslated('out_of_stock', context), context);
-                                                                      }
-                                                                    },
-                                                                    child: Padding(
-                                                                      padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL, vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                                                      child: Icon(Icons.add, size: 20,color: Theme.of(context).primaryColor),
-                                                                    ),
-                                                                  ),
-                                                                ]),
-
-
+                                                                SizedBox(
+                                                                    width: 10),
                                                               ],
-                                                            )),
-                                                        !ResponsiveHelper.isMobile(context) ? Padding(
-                                                          padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
-                                                          child: IconButton(
-                                                            onPressed: () {
-                                                              Provider.of<CartProvider>(context, listen: false).removeFromCart(index, context);
-                                                            },
-                                                            icon: Icon(Icons.delete, color: Colors.red),
-                                                          ),
-                                                        ) : SizedBox(),
-
+                                                            ),
+                                                            SizedBox(height: 5),
+                                                            Row(children: [
+                                                              Expanded(
+                                                                  child: Text(
+                                                                      '${cart.cartList[index].capacity} ${cart.cartList[index].unit}',
+                                                                      style: poppinsRegular.copyWith(
+                                                                          fontSize:
+                                                                              Dimensions.FONT_SIZE_SMALL))),
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  if (cart
+                                                                          .cartList[
+                                                                              index]
+                                                                          .prescriptionRequired ==
+                                                                      'yes') {
+                                                                    temp =
+                                                                        false;
+                                                                    reloaded =
+                                                                        false;
+                                                                    skip();
+                                                                  }
+                                                                  Provider.of<CouponProvider>(
+                                                                          context,
+                                                                          listen:
+                                                                              false)
+                                                                      .removeCouponData(
+                                                                          false);
+                                                                  if (cart
+                                                                          .cartList[
+                                                                              index]
+                                                                          .quantity >
+                                                                      1) {
+                                                                    Provider.of<CartProvider>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .setQuantity(
+                                                                            false,
+                                                                            index);
+                                                                  } else if (cart
+                                                                          .cartList[
+                                                                              index]
+                                                                          .quantity ==
+                                                                      1) {
+                                                                    Provider.of<CartProvider>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .removeFromCart(
+                                                                            index,
+                                                                            context);
+                                                                  }
+                                                                },
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.symmetric(
+                                                                      horizontal:
+                                                                          Dimensions
+                                                                              .PADDING_SIZE_SMALL,
+                                                                      vertical:
+                                                                          Dimensions
+                                                                              .PADDING_SIZE_EXTRA_SMALL),
+                                                                  child: Icon(
+                                                                      Icons
+                                                                          .remove,
+                                                                      size: 20,
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .primaryColor),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                  cart
+                                                                      .cartList[
+                                                                          index]
+                                                                      .quantity
+                                                                      .toString(),
+                                                                  style: poppinsSemiBold.copyWith(
+                                                                      fontSize:
+                                                                          Dimensions
+                                                                              .FONT_SIZE_EXTRA_LARGE,
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .primaryColor)),
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  if (cart
+                                                                          .cartList[
+                                                                              index]
+                                                                          .quantity <
+                                                                      cart
+                                                                          .cartList[
+                                                                              index]
+                                                                          .stock) {
+                                                                    Provider.of<CouponProvider>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .removeCouponData(
+                                                                            false);
+                                                                    Provider.of<CartProvider>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .setQuantity(
+                                                                            true,
+                                                                            index);
+                                                                  } else {
+                                                                    showCustomSnackBar(
+                                                                        getTranslated(
+                                                                            'out_of_stock',
+                                                                            context),
+                                                                        context);
+                                                                  }
+                                                                },
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.symmetric(
+                                                                      horizontal:
+                                                                          Dimensions
+                                                                              .PADDING_SIZE_SMALL,
+                                                                      vertical:
+                                                                          Dimensions
+                                                                              .PADDING_SIZE_EXTRA_SMALL),
+                                                                  child: Icon(
+                                                                      Icons.add,
+                                                                      size: 20,
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .primaryColor),
+                                                                ),
+                                                              ),
+                                                            ]),
+                                                          ],
+                                                        )),
+                                                        !ResponsiveHelper
+                                                                .isMobile(
+                                                                    context)
+                                                            ? Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal:
+                                                                        Dimensions
+                                                                            .PADDING_SIZE_SMALL),
+                                                                child:
+                                                                    IconButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Provider.of<CartProvider>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .removeFromCart(
+                                                                            index,
+                                                                            context);
+                                                                  },
+                                                                  icon: Icon(
+                                                                      Icons
+                                                                          .delete,
+                                                                      color: Colors
+                                                                          .red),
+                                                                ),
+                                                              )
+                                                            : SizedBox(),
                                                       ]),
                                                     ),
                                                   ),
@@ -365,48 +549,75 @@ class _CartScreenState extends State<CartScreen> {
                                                   ),
                                                   child: InkWell(
                                                     onTap: () {
-                                                      showDialog(context: context,builder: (BuildContext context){
-                                                        return AlertDialog(
-                                                          title: Padding(
-                                                            padding: const EdgeInsets.only(left: 15.0),
-                                                            child: Text('Upload Prescription'),
-                                                          ),
-                                                          actions: [
-                                                            InkWell(
-
-                                                              onTap: () async {
-                                                                Provider.of<OrderProvider>(
-                                                                    context,
-                                                                    listen: false)
-                                                                    .choosePhotoFromCamera(
-                                                                    0, context);
-                                                                Navigator.pop(context);
-                                                              },
-                                                              child: Icon(
-                                                                Icons.camera_alt,
-                                                                color: ColorResources.getHintColor(context),
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              title: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            15.0),
+                                                                child: Text(
+                                                                    'Upload Prescription'),
                                                               ),
-                                                            ),
-                                                            SizedBox(width: 24),
-                                                            Padding(
-                                                              padding: const EdgeInsets.only(right: 80.0),
-                                                              child: InkWell(
-                                                                onTap: () async {
-                                                                  Provider.of<OrderProvider>(
-                                                                      context,
-                                                                      listen: false)
-                                                                      .choosePhoto(0, context);
-                                                                  Navigator.pop(context);
-                                                                },
-                                                                child: Icon(
-                                                                  Icons.insert_photo,
-                                                                  color: ColorResources.getHintColor(context),
+                                                              actions: [
+                                                                InkWell(
+                                                                  onTap:
+                                                                      () async {
+                                                                    Provider.of<OrderProvider>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .choosePhotoFromCamera(
+                                                                            0,
+                                                                            context);
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .camera_alt,
+                                                                    color: ColorResources
+                                                                        .getHintColor(
+                                                                            context),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      });
+                                                                SizedBox(
+                                                                    width: 24),
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      right:
+                                                                          80.0),
+                                                                  child:
+                                                                      InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      Provider.of<OrderProvider>(
+                                                                              context,
+                                                                              listen:
+                                                                                  false)
+                                                                          .choosePhoto(
+                                                                              0,
+                                                                              context);
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .insert_photo,
+                                                                      color: ColorResources
+                                                                          .getHintColor(
+                                                                              context),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          });
                                                     },
                                                     child: Stack(
                                                       clipBehavior: Clip.none,

@@ -116,7 +116,13 @@ class RouteHelper {
           double amount, double discount, String type, String code) =>
       '$checkout?amount=$amount&discount=$discount&type=$type&code=$code';
   static String getOrderTrackingRoute(int id) => '$trackOrder?id=$id';
-  static String getCategoryProductsRoute(int id) => '$categoryProducts?id=$id';
+  static String getCategoryProductsRoute(int id, {bool act}) {
+    if (act == false) {
+      return '$categoryProducts?id=$id';
+    }
+    return '$categoryProducts?id=$id&activated=$act';
+  }
+
   static String getProductDescriptionRoute(String description) =>
       '$productDescription?description=$description';
   static String getPrescriptionRoute() => '$prescription';
@@ -306,12 +312,21 @@ class RouteHelper {
       Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
     CategoryProductScreen _categoryProductScreen =
         ModalRoute.of(context).settings.arguments;
+
+    if (params["activated"]?.first == "true") {
+      return CategoryProductScreen(
+          activated: true,
+          categoryModel: CategoryModel(
+            id: int.parse(params['id'][0]),
+          ));
+    }
     return _categoryProductScreen != null
         ? _categoryProductScreen
         : CategoryProductScreen(
+            activated: false,
             categoryModel: CategoryModel(
-            id: int.parse(params['id'][0]),
-          ));
+              id: int.parse(params['id'][0]),
+            ));
   });
 
   static Handler _productDescriptionHandler =
@@ -379,16 +394,35 @@ class RouteHelper {
     String _data = utf8.decode(_decode);
     return SearchResultScreen(searchString: _data);
   });
-  static Handler _cartHandler = Handler(
-      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
-          CartScreen());
+  static Handler _cartHandler =
+      Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    if (params["activated"]?.first == "true") {
+      return CartScreen(
+        activated: true,
+      );
+    }
+    return CartScreen(
+      activated: false,
+    );
+  });
   static Handler _prescriptionHandler = Handler(
       handlerFunc: (context, Map<String, dynamic> params) =>
           PrescriptionScreen());
 
-  static Handler _categorysHandler = Handler(
-      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
-          AllCategoryScreen());
+  static Handler _categorysHandler =
+      Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    print(params);
+    if (params["activated"]?.first == "true") {
+      print("kello");
+      return AllCategoryScreen(
+        activated: true,
+      );
+    }
+    print("zello");
+    return AllCategoryScreen(
+      activated: false,
+    );
+  });
   static Handler _profileMenusHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           MenuWidget());
