@@ -90,209 +90,213 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
             ? MainAppBar()
             : DetailsAppBar(key: _key),
         body: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width - 25,
-                // height: MediaQuery.of(context).size.height * 18 / 100,
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    color: ColorResources.getCardBgColor(context),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 0.5,
-                      ),
-                    ]),
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "UPLOAD",
-                      style: TextStyle(
-                          fontSize: 17,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width - 25,
+                  // height: MediaQuery.of(context).size.height * 18 / 100,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      color: ColorResources.getCardBgColor(context),
+                      boxShadow: [
+                        BoxShadow(
                           color: Colors.grey,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      "Please Upload images of valid prescriptions from your doctor.",
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  _getFromCamera();
-                                },
-                                child:
-                                    Icon(Icons.camera_alt, color: Colors.white),
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  padding: EdgeInsets.all(25),
-                                  primary: Colors.blue, // <-- Button color
-                                  onPrimary: Colors.red, // <-- Splash color
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text("Camera"),
-                            ],
-                          ),
+                          blurRadius: 0.5,
                         ),
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  _getFromGallery();
-                                },
-                                child: Icon(Icons.photo_rounded,
-                                    color: Colors.white),
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  padding: EdgeInsets.all(25),
-                                  primary: Colors.blue, // <-- Button color
-                                  onPrimary: Colors.red, // <-- Splash color
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text("Gallery"),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  _getPdf();
-                                },
-                                child: Icon(Icons.picture_as_pdf,
-                                    color: Colors.white),
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  padding: EdgeInsets.all(25),
-                                  primary: Colors.blue, // <-- Button color
-                                  onPrimary: Colors.red, // <-- Splash color
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text("PDF"),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    if (pickedImages.length > 0)
-                      Container(
-                        height: 90,
-                        margin: EdgeInsets.only(top: 15),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              for (var i = pickedImages.length - 1; i >= 0; i--)
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 15),
-                                  child: Stack(
-                                    children: [
-                                      Image.file(
-                                        pickedImages[i],
-                                      ),
-                                    ],
-                                  ),
-                                )
-                            ],
-                          ),
-                        ),
-                      )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Center(
+                      ]),
+                  padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("VALID PRISCRIPTION GUIDE",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey.shade600,
-                              fontWeight: FontWeight.w500)),
                       Text(
-                        "Image should be sharp and contain below mentioned 4 points",
+                        "UPLOAD",
                         style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey.shade400,
-                        ),
+                            fontSize: 17,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w600),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Image.asset("assets/image/valid.png"),
-                      )
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "Please Upload images of valid prescriptions from your doctor.",
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _getFromCamera();
+                                  },
+                                  child: Icon(Icons.camera_alt,
+                                      color: Colors.white),
+                                  style: ElevatedButton.styleFrom(
+                                    shape: CircleBorder(),
+                                    padding: EdgeInsets.all(25),
+                                    primary: Colors.blue, // <-- Button color
+                                    onPrimary: Colors.red, // <-- Splash color
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text("Camera"),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _getFromGallery();
+                                  },
+                                  child: Icon(Icons.photo_rounded,
+                                      color: Colors.white),
+                                  style: ElevatedButton.styleFrom(
+                                    shape: CircleBorder(),
+                                    padding: EdgeInsets.all(25),
+                                    primary: Colors.blue, // <-- Button color
+                                    onPrimary: Colors.red, // <-- Splash color
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text("Gallery"),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _getPdf();
+                                  },
+                                  child: Icon(Icons.picture_as_pdf,
+                                      color: Colors.white),
+                                  style: ElevatedButton.styleFrom(
+                                    shape: CircleBorder(),
+                                    padding: EdgeInsets.all(25),
+                                    primary: Colors.blue, // <-- Button color
+                                    onPrimary: Colors.red, // <-- Splash color
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text("PDF"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (pickedImages.length > 0)
+                        Container(
+                          height: 90,
+                          margin: EdgeInsets.only(top: 15),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                for (var i = pickedImages.length - 1;
+                                    i >= 0;
+                                    i--)
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: Stack(
+                                      children: [
+                                        Image.file(
+                                          pickedImages[i],
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
+                        )
                     ],
                   ),
                 ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width - 100,
-                decoration: BoxDecoration(),
-                child: TextButton(
-                  onPressed: () {
-                    if (pickedImages.length == 0 && pickedPdf == null) {
-                      return;
-                    }
-                    Provider.of<CartProvider>(context, listen: false)
-                        .pickedImages = pickedImages;
-                    Provider.of<CartProvider>(context, listen: false)
-                        .pickedPDF = pickedPdf;
-                    Navigator.pushNamed(
-                        context, RouteHelper.categorys + "?activated=true");
-                  },
-                  style: ButtonStyle(
-                      // backgroundColor:
-                      //     MaterialStateProperty.all<Color>(Colors.grey[200]),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15, left: 20),
                   child: Center(
-                    child: Container(
-                      child: Text(
-                        "CONTINUE",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
-                            color:
-                                (pickedImages.length == 0 && pickedPdf == null)
-                                    ? Colors.black26
-                                    : null),
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("VALID PRISCRIPTION GUIDE",
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey.shade600,
+                                fontWeight: FontWeight.w500)),
+                        Text(
+                          "Image should be sharp and contain below mentioned 4 points",
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey.shade400,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Image.asset("assets/image/valid.png"),
+                        )
+                      ],
                     ),
                   ),
                 ),
-              )
-            ],
+                Container(
+                  width: MediaQuery.of(context).size.width - 100,
+                  decoration: BoxDecoration(),
+                  child: TextButton(
+                    onPressed: () {
+                      if (pickedImages.length == 0 && pickedPdf == null) {
+                        return;
+                      }
+                      Provider.of<CartProvider>(context, listen: false)
+                          .pickedImages = pickedImages;
+                      Provider.of<CartProvider>(context, listen: false)
+                          .pickedPDF = pickedPdf;
+                      Navigator.pushNamed(
+                          context, RouteHelper.categorys + "?activated=true");
+                    },
+                    style: ButtonStyle(
+                        // backgroundColor:
+                        //     MaterialStateProperty.all<Color>(Colors.grey[200]),
+                        ),
+                    child: Center(
+                      child: Container(
+                        child: Text(
+                          "CONTINUE",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                              color: (pickedImages.length == 0 &&
+                                      pickedPdf == null)
+                                  ? Colors.black26
+                                  : null),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ));
   }
