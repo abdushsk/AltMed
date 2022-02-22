@@ -170,7 +170,6 @@ class HomeScreen extends StatelessWidget {
                                 ? SizedBox()
                                 : DailyItemView();
                       }),
-
                       // Popular Item
                       Padding(
                         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
