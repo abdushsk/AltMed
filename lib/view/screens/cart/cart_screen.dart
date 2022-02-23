@@ -1088,10 +1088,15 @@ class _CartScreenState extends State<CartScreen> {
                               getTranslated('continue_checkout', context),
                           onPressed: () {
                             if (_itemPrice <
-                                Provider.of<SplashProvider>(context,
-                                        listen: false)
-                                    .configModel
-                                    .minimumOrderValue) {
+                                    Provider.of<SplashProvider>(context,
+                                            listen: false)
+                                        .configModel
+                                        .minimumOrderValue &&
+                                Provider.of<CartProvider>(context,
+                                            listen: false)
+                                        .pickedImages
+                                        .length ==
+                                    0) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                       content: Text(
