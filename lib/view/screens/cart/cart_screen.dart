@@ -120,7 +120,11 @@ class _CartScreenState extends State<CartScreen> {
                 Provider.of<CouponProvider>(context).discount +
                 deliveryCharge;
 
-            return cart.cartList.length > 0
+            return (cart.cartList.length > 0 ||
+                    Provider.of<CartProvider>(context, listen: false)
+                            .pickedImages
+                            .length >
+                        0)
                 ? Column(
                     children: [
                       Expanded(
