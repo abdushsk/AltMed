@@ -1,5 +1,7 @@
 class PlaceOrderBody {
   List<Cart> _cart;
+  List<String> _pickedImages;
+  String _pickedPDF;
   double _couponDiscountAmount;
   String _couponDiscountTitle;
   double _orderAmount;
@@ -14,25 +16,27 @@ class PlaceOrderBody {
   double _distance;
   String _image;
 
-
-  PlaceOrderBody(
-      {List<Cart> cart,
-        double couponDiscountAmount,
-        String couponDiscountTitle,
-        double orderAmount,
-        String orderType,
-        int branchId,
-        int deliveryAddressId,
-        int timeSlotId,
-        String deliveryDate,
-        String paymentMethod,
-        String orderNote,
-        String couponCode,
-        double distance,
-        String image,
-
-      }) {
+  PlaceOrderBody({
+    List<Cart> cart,
+    List<String> pickedImages,
+    String pickedPDF,
+    double couponDiscountAmount,
+    String couponDiscountTitle,
+    double orderAmount,
+    String orderType,
+    int branchId,
+    int deliveryAddressId,
+    int timeSlotId,
+    String deliveryDate,
+    String paymentMethod,
+    String orderNote,
+    String couponCode,
+    double distance,
+    String image,
+  }) {
+    this._pickedImages = pickedImages;
     this._cart = cart;
+    this._pickedPDF = pickedPDF;
     this._couponDiscountAmount = couponDiscountAmount;
     this._couponDiscountTitle = couponDiscountTitle;
     this._orderAmount = orderAmount;
@@ -83,6 +87,8 @@ class PlaceOrderBody {
     _couponCode = json['coupon_code'];
     _distance = json['distance'];
     _image = json['image'];
+    this._pickedImages = json['prescription_images'];
+    this._pickedPDF = json['prescription_pdf'];
   }
 
   Map<String, dynamic> toJson() {
@@ -103,6 +109,8 @@ class PlaceOrderBody {
     data['coupon_code'] = this._couponCode;
     data['distance'] = this._distance;
     data['image'] = this._image;
+    data['prescription_images'] = this._pickedImages;
+    data['prescription_pdf'] = this._pickedPDF;
     return data;
   }
 }
@@ -117,15 +125,16 @@ class Cart {
   double _taxAmount;
   String _image;
 
-  Cart(
-      {int productId,
-        double price,
-        String variant,
-        List<Variation> variation,
-        double discountAmount,
-        int quantity,
-        double taxAmount,
-        String image,}) {
+  Cart({
+    int productId,
+    double price,
+    String variant,
+    List<Variation> variation,
+    double discountAmount,
+    int quantity,
+    double taxAmount,
+    String image,
+  }) {
     this._productId = productId;
     this._price = price;
     this._variant = variant;

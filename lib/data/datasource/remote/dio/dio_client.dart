@@ -13,11 +13,12 @@ class DioClient {
   Dio dio;
   String token;
 
-  DioClient(this.baseUrl,
-      Dio dioC, {
-        this.loggingInterceptor,
-        this.sharedPreferences,
-      }) {
+  DioClient(
+    this.baseUrl,
+    Dio dioC, {
+    this.loggingInterceptor,
+    this.sharedPreferences,
+  }) {
     token = sharedPreferences.getString(AppConstants.TOKEN);
     print(token);
     dio = dioC ?? Dio();
@@ -33,7 +34,8 @@ class DioClient {
     dio.interceptors.add(loggingInterceptor);
   }
 
-  Future<Response> get(String uri, {
+  Future<Response> get(
+    String uri, {
     Map<String, dynamic> queryParameters,
     Options options,
     CancelToken cancelToken,
@@ -47,17 +49,30 @@ class DioClient {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
+      if (AppConstants.ORDER_LIST_URI == uri) {
+        print("yoyo");
+      }
       return response;
     } on SocketException catch (e) {
+      if (AppConstants.ORDER_LIST_URI == uri) {
+        print("yoyo");
+      }
       throw SocketException(e.toString());
     } on FormatException catch (_) {
+      if (AppConstants.ORDER_LIST_URI == uri) {
+        print("yoyo");
+      }
       throw FormatException("Unable to process the data");
     } catch (e) {
+      if (AppConstants.ORDER_LIST_URI == uri) {
+        print("yoyo");
+      }
       throw e;
     }
   }
 
-  Future<Response> post(String uri, {
+  Future<Response> post(
+    String uri, {
     data,
     Map<String, dynamic> queryParameters,
     Options options,
@@ -83,7 +98,8 @@ class DioClient {
     }
   }
 
-  Future<Response> put(String uri, {
+  Future<Response> put(
+    String uri, {
     data,
     Map<String, dynamic> queryParameters,
     Options options,
@@ -109,7 +125,8 @@ class DioClient {
     }
   }
 
-  Future<Response> delete(String uri, {
+  Future<Response> delete(
+    String uri, {
     data,
     Map<String, dynamic> queryParameters,
     Options options,

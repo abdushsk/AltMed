@@ -124,7 +124,10 @@ class _CartScreenState extends State<CartScreen> {
                     Provider.of<CartProvider>(context, listen: false)
                             .pickedImages
                             .length >
-                        0)
+                        0 ||
+                    Provider.of<CartProvider>(context, listen: false)
+                            .pickedPDF !=
+                        null)
                 ? Column(
                     children: [
                       Expanded(
@@ -835,89 +838,108 @@ class _CartScreenState extends State<CartScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                   //  PRESCRIPTION START
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            bottom: 10),
-                                                    child: Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width -
-                                                              25,
-                                                      // height: MediaQuery.of(context).size.height * 18 / 100,
-                                                      decoration: BoxDecoration(
-                                                          shape: BoxShape
-                                                              .rectangle,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          10.0)),
-                                                          color: ColorResources
-                                                              .getCardBgColor(
-                                                                  context),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color:
-                                                                  Colors.grey,
-                                                              blurRadius: 0.5,
-                                                            ),
-                                                          ]),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text("Prescription",
-                                                                style: poppinsMedium
-                                                                    .copyWith(
-                                                                        fontSize:
-                                                                            Dimensions.FONT_SIZE_LARGE)),
-                                                            Container(
-                                                              height: 90,
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      top: 15),
-                                                              child:
-                                                                  SingleChildScrollView(
-                                                                scrollDirection:
-                                                                    Axis.horizontal,
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    for (var i =
-                                                                            Provider.of<CartProvider>(context, listen: false).pickedImages.length -
-                                                                                1;
-                                                                        i >= 0;
-                                                                        i--)
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.only(right: 15),
-                                                                        child:
-                                                                            Stack(
-                                                                          children: [
-                                                                            Image.file(
-                                                                              Provider.of<CartProvider>(context, listen: false).pickedImages[i],
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      )
-                                                                  ],
-                                                                ),
+                                                  if (Provider.of<CartProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .pickedPDF !=
+                                                          null ||
+                                                      Provider.of<CartProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .pickedImages
+                                                              .length >
+                                                          0)
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 10),
+                                                      child: Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width -
+                                                            25,
+                                                        // height: MediaQuery.of(context).size.height * 18 / 100,
+                                                        decoration: BoxDecoration(
+                                                            shape: BoxShape
+                                                                .rectangle,
+                                                            borderRadius:
+                                                                BorderRadius.all(
+                                                                    Radius.circular(
+                                                                        10.0)),
+                                                            color: ColorResources
+                                                                .getCardBgColor(
+                                                                    context),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color:
+                                                                    Colors.grey,
+                                                                blurRadius: 0.5,
                                                               ),
-                                                            ),
-                                                          ],
+                                                            ]),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                  "Prescription Added",
+                                                                  style: poppinsMedium
+                                                                      .copyWith(
+                                                                          fontSize:
+                                                                              Dimensions.FONT_SIZE_LARGE)),
+                                                              if (Provider.of<CartProvider>(
+                                                                          context,
+                                                                          listen:
+                                                                              false)
+                                                                      .pickedImages
+                                                                      .length >
+                                                                  0)
+                                                                Container(
+                                                                  height: 90,
+                                                                  margin: EdgeInsets
+                                                                      .only(
+                                                                          top:
+                                                                              15),
+                                                                  child:
+                                                                      SingleChildScrollView(
+                                                                    scrollDirection:
+                                                                        Axis.horizontal,
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        for (var i = Provider.of<CartProvider>(context, listen: false).pickedImages.length -
+                                                                                1;
+                                                                            i >=
+                                                                                0;
+                                                                            i--)
+                                                                          Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(right: 15),
+                                                                            child:
+                                                                                Stack(
+                                                                              children: [
+                                                                                Image.file(
+                                                                                  Provider.of<CartProvider>(context, listen: false).pickedImages[i],
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
                                                   // PRESCRIPTION END
                                                   Text(
                                                       getTranslated(
@@ -1096,7 +1118,11 @@ class _CartScreenState extends State<CartScreen> {
                                             listen: false)
                                         .pickedImages
                                         .length ==
-                                    0) {
+                                    0 &&
+                                Provider.of<CartProvider>(context,
+                                            listen: false)
+                                        .pickedPDF ==
+                                    null) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                       content: Text(

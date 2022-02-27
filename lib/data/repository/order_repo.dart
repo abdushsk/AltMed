@@ -61,23 +61,43 @@ class OrderRepo {
   Future<ApiResponse> placeOrder(
       PlaceOrderBody orderBody, PickedFile file, String token) async {
     try {
-      http.MultipartRequest request = http.MultipartRequest('POST',
-          Uri.parse('${AppConstants.BASE_URL}${AppConstants.PLACE_ORDER_URI}'));
-      if (file != null && ResponsiveHelper.isMobilePhone()) {
-        File _file = File(file.path);
-        request.files.add(http.MultipartFile(
-            'image', _file.readAsBytes().asStream(), _file.lengthSync(),
-            filename: _file.path.split('/').last));
-      }
+      // http.MultipartRequest request = http.MultipartRequest('POST',
+      //     Uri.parse('${AppConstants.BASE_URL}${AppConstants.PLACE_ORDER_URI}'));
+      // if (file != null && ResponsiveHelper.isMobilePhone()) {
+      //   File _file = File(file.path);
+      //   request.files.add(http.MultipartFile(
+      //       'image', _file.readAsBytes().asStream(), _file.lengthSync(),
+      //       filename: _file.path.split('/').last));
+      // }
 
       final response = await dioClient.post(AppConstants.PLACE_ORDER_URI,
           data: orderBody.toJson());
-      http.StreamedResponse response1 = await request.send();
+      // http.StreamedResponse response1 = await response.send();
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+  //   Future<ApiResponse> placeOrder(
+  //     PlaceOrderBody orderBody, PickedFile file, String token) async {
+  //   try {
+  //     http.MultipartRequest request = http.MultipartRequest('POST',
+  //         Uri.parse('${AppConstants.BASE_URL}${AppConstants.PLACE_ORDER_URI}'));
+  //     if (file != null && ResponsiveHelper.isMobilePhone()) {
+  //       File _file = File(file.path);
+  //       // request.fields[]= raj
+  //       request.files.add(http.MultipartFile(
+  //           'prescription', _file.readAsBytes().asStream(), _file.lengthSync(),
+  //           contentType: ,
+  //           filename: _file.path.split('/').last));
+  //     }
+  //     request.b
+  //    http.StreamedResponse response = await request.send();
+  //     return ApiResponse.withSuccess(response);
+  //   } catch (e) {
+  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+  //   }
+  // }
 
   Future<ApiResponse> getDeliveryManData(String orderID) async {
     try {
